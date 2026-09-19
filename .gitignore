@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Streamlit secrets (contains connection credentials)
+.streamlit/secrets.toml
+
+# Environment variables / credentials
+.env
+.env.*
+.env.local
+.env.production
+
+# Private keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Snowflake local config (contains OAuth tokens)
+# Do NOT commit ~/.snowflake/ — it lives outside this repo.
+# This entry catches any accidental copies.
+snowflake_credentials.*
+.snowflake/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs and temp files
+*.log
+*.tmp
+/tmp/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data intermediates (empty archive from download attempt)
+data/brunel.zip
