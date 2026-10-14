@@ -1019,6 +1019,16 @@ def _render_sidebar():
         st.markdown('<div class="sidebar-section">Workspace</div>', unsafe_allow_html=True)
         st.markdown('<div class="sidebar-item active">Ask Agent</div>', unsafe_allow_html=True)
 
+        st.markdown('<div class="sidebar-section">Questions</div>', unsafe_allow_html=True)
+        with st.expander("Commercial \u00b7 TPC-H", expanded=False):
+            for i, q in enumerate(SUGGESTED_QUESTIONS_COMMERCIAL):
+                if st.button(q, key=f"sb_q_c_{i}", use_container_width=True):
+                    st.session_state.pending_question = q
+        with st.expander("Logistics \u00b7 Brunel", expanded=False):
+            for i, q in enumerate(SUGGESTED_QUESTIONS_LOGISTICS):
+                if st.button(q, key=f"sb_q_l_{i}", use_container_width=True):
+                    st.session_state.pending_question = q
+
         st.markdown('<div class="sidebar-section">Operations</div>', unsafe_allow_html=True)
         st.markdown('<div class="sidebar-item">Commercial</div>', unsafe_allow_html=True)
         st.markdown('<div class="sidebar-item">Logistics</div>', unsafe_allow_html=True)
