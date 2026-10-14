@@ -9,7 +9,7 @@ import snowflake.connector
 
 SEMANTIC_VIEW = "SUPPLYLENS.ANALYTICS.SUPPLY_CHAIN_V2"
 AGENT_NAME = "SUPPLYLENS.ANALYTICS.SUPPLY_CHAIN_AGENT"
-WAREHOUSE = "COMPUTE_WH"
+WAREHOUSE = "SUPPLYLENS_PUBLIC_WH"
 
 SUGGESTED_QUESTIONS_COMMERCIAL = [
     "What is our overall on-time delivery rate?",
@@ -534,12 +534,22 @@ def get_connection():
                     account=cfg["account"],
                     user=cfg["user"],
                     warehouse=cfg.get("warehouse", WAREHOUSE),
-                    role=cfg.get("role", "ACCOUNTADMIN"),
+                    role=cfg.get("role", "SUPPLYLENS_PUBLIC_RO"),
                     database="SUPPLYLENS",
                     schema="ANALYTICS",
                 )
                 auth = cfg.get("authenticator", "")
-                if auth:
+                if cfg.get("private_key", ""):
+                    from cryptography.hazmat.primitives import serialization
+                    pk = serialization.load_pem_private_key(
+                        cfg["private_key"].encode(), password=None
+                    )
+                    connect_args["private_key"] = pk.private_bytes(
+                        serialization.Encoding.DER,
+                        serialization.PrivateFormat.PKCS8,
+                        serialization.NoEncryption(),
+                    )
+                elif auth:
                     connect_args["authenticator"] = auth
                     connect_args["client_store_temporary_credential"] = True
                 else:
